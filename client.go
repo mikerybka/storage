@@ -3,7 +3,6 @@ package storage
 import (
 	"io"
 	"net/http"
-	"strings"
 )
 
 type Client struct {
@@ -13,7 +12,7 @@ type Client struct {
 }
 
 // Read downloads the content from the specified path and writes it to the provided io.Writer.
-func (sc *Client) Read(w io.Writer, path string) (int, error) {
+func (sc *Client) Read(w io.Writer, path string) (int64, error) {
 	url := sc.EndpointURL + "/" + path
 
 	req, err := http.NewRequest("GET", url, nil)
