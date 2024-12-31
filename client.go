@@ -39,10 +39,7 @@ func (c *Client) BucketExists(ctx context.Context, name string) (bool, error) {
 }
 
 func (c *Client) Bucket(ctx context.Context, name string) (*Bucket, error) {
-	ok, err := c.BucketExists(ctx, name)
-	if err != nil {
-		return nil, fmt.Errorf("checking bucket: %s", err)
-	}
+	ok, _ := c.BucketExists(ctx, name)
 	if !ok {
 		err := c.CreateBucket(ctx, name)
 		if err != nil {
