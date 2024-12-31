@@ -3,6 +3,7 @@ package storage
 import (
 	"bytes"
 	"context"
+	"io"
 
 	"github.com/minio/minio-go/v7"
 )
@@ -22,4 +23,12 @@ func (b *Bucket) Put(ctx context.Context, name string, data []byte) error {
 		minio.PutObjectOptions{},
 	)
 	return err
+}
+
+func (b *Bucket) Get(ctx context.Context, name string) ([]byte, error) {
+	obj, err := b.minioClient.GetObject(ctx, b.name, name, minio.GetObjectOptions{})
+	if err != nil {
+		return nil, err
+	}
+	return io.ReadAll(obj)
 }
